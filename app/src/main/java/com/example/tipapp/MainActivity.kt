@@ -37,7 +37,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
 @Preview
 @Composable
 fun TopHeader(totalPerPerson: Double = 0.0) {
@@ -81,20 +80,15 @@ fun MainContent() {
         shape = RoundedCornerShape(corner = CornerSize(8.dp)),
         border = BorderStroke(width = 1.dp, color = Color.LightGray)
     ) {
-
         Column {
 
-
             Text("Hello")
             Text("Hello")
             Text("Hello")
             Text("Hello")
-
 
         }
-
     }
-
 }
 
 
