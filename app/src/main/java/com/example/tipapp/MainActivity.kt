@@ -2,6 +2,7 @@ package com.example.tipapp
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -17,7 +18,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyApp() {
-              //  Text(text = "Hello Again")
+                //  Text(text = "Hello Again")
                 TopHeader()
                 MainContent()
             }
@@ -77,17 +77,38 @@ fun TopHeader(totalPerPerson: Double = 0.0) {
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class)
+
 @Preview(showBackground = true)
 @Composable
 fun MainContent() {
 
-    val totalBillState = remember { mutableStateOf("")
+
+    BillForm() {
+
+            billAmt ->
+        Log.d("AMT","Main Content: $billAmt")
+
     }
-    val validState = remember(totalBillState.value){
+
+
+}
+
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun BillForm(
+    modifier: Modifier = Modifier,
+    onValChange: (String) -> Unit = {}
+
+) {
+
+    val totalBillState = remember {
+        mutableStateOf("")
+    }
+    val validState = remember(totalBillState.value) {
         totalBillState.value.trim().isNotEmpty()
     }
-    val keyboardController =  LocalSoftwareKeyboardController.current
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Surface(
         modifier = Modifier
@@ -98,22 +119,24 @@ fun MainContent() {
     ) {
         Column {
 
-        InputField(valueState =totalBillState ,
-            labelId = "Enter Bill" ,
-            enabled = true,
-            isSingleLine = true,
-            onAction = KeyboardActions{
+            InputField(valueState = totalBillState,
+                labelId = "Enter Bill",
+                enabled = true,
+                isSingleLine = true,
+                onAction = KeyboardActions {
 
-            if(!validState) return@KeyboardActions
+                    if (!validState) return@KeyboardActions
 
-                //Todo -- onvalueChanged
+                    onValChange(totalBillState.value.trim())
 
-                keyboardController?.hide()
-            }
-        )
+                    keyboardController?.hide()
+                }
+            )
 
         }
     }
+
+
 }
 
 
