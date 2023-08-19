@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MyApp() {
                 //  Text(text = "Hello Again")
-             //   TopHeader()
+                //   TopHeader()
                 MainContent()
             }
         }
@@ -163,11 +163,18 @@ fun BillForm(
 
                         RoundedIconButton(
                             imageVector = Icons.Default.Remove,
-                            onClick = { Log.d("ICON","Click - ")})
+                            onClick = { Log.d("ICON", "Click - ") })
+
+                        Text(
+                            text = "2",
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                                .padding(start = 9.dp, end = 9.dp)
+                        )
 
                         RoundedIconButton(
                             imageVector = Icons.Default.Add,
-                            onClick = { Log.d("ICON","Click +") })
+                            onClick = { Log.d("ICON", "Click +") })
 
                     }
 
